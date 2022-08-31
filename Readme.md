@@ -19,6 +19,6 @@ converting it to lambda:
 
 updating the app with mangum to have a handler for lambda to be able to call
 
-## used API
+## S3 Bucket, Lambda, API
 
-the used api is defined by the given api.yaml file and can be imported at aws
+The S3 Bucket, Lambda and API Gateway was created using AWS
