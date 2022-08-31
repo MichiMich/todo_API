@@ -55,6 +55,18 @@ async def update_existing(todo_id: str, todo: Todo):
     raise HTTPException(status_code=404, detail="given id does not exist")
 
 
+# Delete existing To-Do object
+@router.delete("/{todo_id}")
+async def delete_existing(todo_id: str):
+    # delete element if existent
+    index = get_index_of_id(todo_id)
+    if index != -1:
+        todoList.pop(index)
+        return "element successfully deleted"
+    # element not found in list
+    raise HTTPException(status_code=404, detail="given id does not exist")
+
+
 # create new object, id needs to be provided
 # @router.put("/{todo_id}")
 # async def create_todo(todo_id: int, todo: Todo):
