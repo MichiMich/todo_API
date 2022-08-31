@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from .endpoints import users
+from .endpoints import todo
 
 router = APIRouter()
-router.include_router(users.router, prefix="/users", tags=["Users"])
+router.include_router(todo.router, prefix="/todo", tags=["Todo"])
