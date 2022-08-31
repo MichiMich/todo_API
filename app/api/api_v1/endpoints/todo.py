@@ -10,60 +10,49 @@ class Todo(BaseModel):
     title : str
     description : str
 
-harry = Todo(id="1", title="Harry", description="dirty harray")
+todoList = []
 
-todoList = [harry]
-
-def get_list_index_of_id(id: str):
+def get_index_of_id(id: str):
     for i in range(0,len(todoList),1):
         if todoList[i].id == id:
             return i
     return -1
 
-print(get_list_index_of_id("1"))
-print(get_list_index_of_id("2"))
-
-
+# Get all To-Do objects
 @router.get("/")
-async def get_todo():
+async def get_all():
     # we should show all list data
     return todoList
 
-
-
+# Get To-Do object by id
 @router.get("/{id}")
-async def get_todo_with_id(id: str):
+async def get_by_id(id: str):
     #check if exists, otherwise throw 404 error
-    index = get_list_index_of_id(id)
+    index = get_index_of_id(id)
     if index != -1:
         return todoList[index]
     # element not found in list
     raise HTTPException(status_code=404, detail="id not found")
 
 
-# create new todo element by appending
+# create new todo object
 @router.put("/")
-async def create_todo(todo: Todo):
+async def create_new(todo: Todo):
     # add todo to list
     todoList.append(todo)
-    #show added data
+    #show added object
     return todo
 
-
-
-
-
+# Update existing To-Do object
 @router.put("/{todo_id}")
-async def update_todo(todo_id: str, todo: Todo):
+async def update_existing(todo_id: str, todo: Todo):
     # update element if existent
-    index = get_list_index_of_id(todo_id)
+    index = get_index_of_id(todo_id)
     if index != -1:
         todoList[index] = todo
         return todo
     #show added data
-    raise HTTPException(status_code=404, detail="id does not exist")
-
-
+    raise HTTPException(status_code=404, detail="given id does not exist")
 
 
 # create new object, id needs to be provided
